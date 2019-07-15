@@ -2,6 +2,7 @@
 CTNAME=slackit-123
 MIRROR=${MIRROR:-"ftp://ftp.slackware.com/pub"}
 IPV4=${IPV4:-'10.0.0.1'}
+CTPATH=${CTPATH:-"/var/lib/lxc"}
 
 DIALOG=dialog
 
@@ -51,7 +52,7 @@ echo $CTNAME - $MARCH - $RELEASE :  $MIRROR
 
 $DIALOG --title "SLACKIT-LXC install" --msgbox "\nName: $CTNAME \nSlackware version: $RELEASE - ($MARCH) \n\nMirror source: $MIRROR\n\n$ADDCONF\n" 25 100
 
-MIRROR=$MIRROR arch=$MARCH release=$RELEASE lxc-create -n $CTNAME -t slackware -f /tmp/lxc-slackit-additional.conf 1>& lxc-slackit-install.log & sleep 1
+MIRROR=$MIRROR arch=$MARCH release=$RELEASE lxc-create -P $CTPATH -n $CTNAME -t slackware -f /tmp/lxc-slackit-additional.conf 1>& lxc-slackit-install.log & sleep 1
 $DIALOG   --scrollbar --title "SLACKIT-LXC install" --tailbox "lxc-slackit-install.log" 40 160 && sleep 0.5
 
 echo "$ADDCONF" >> /var/lib/lxc/$CTNAME/config
