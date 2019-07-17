@@ -1,4 +1,4 @@
-
+# William PC, Seattle - US, 2019
 CTNAME=Slackware
 LOGPATH=~/log/lxc-slack-it
 ARCHS="x86 x86_64"
@@ -26,6 +26,9 @@ lxc.network.0.hwaddr = $macaddr" >> $LXCPATH/$1/config
   fi
   sed -i 's/BATCH=off/BATCH=on/' $LXCPATH/$1/rootfs/$SLACKPKGCFG
   sed -i 's/DEFAULT_ANSWER=n/DEFAULT_ANSWER=y/' $LXCPATH/$1/rootfs/$SLACKPKGCFG
+
+  cp -av /usr/local/sbin/slackbuild-management.sh $LXCPATH/$1/rootfs/usr/local/sbin
+  echo "SLACKWARE_VERSION=$rv" > $LXCPATH/$1/rootfs/root/slackbuilds.conf
 
   sleep 1
 }
