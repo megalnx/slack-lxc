@@ -1,8 +1,14 @@
+#!/bin/bash
+#
+#
+#
+# William PC, Seattle, US.
+#
 
-CTNAME=slackit-123
-MIRROR=${MIRROR:-"ftp://ftp.slackware.com/pub"}
+CTNAME=${CTNAME:-slackit-123}
+MIRROR=${MIRROR:-"http://ftp.slackware.com/pub/slackware"}
 IPV4=${IPV4:-'10.0.0.1'}
-CTPATH=${CTPATH:-"/var/lib/lxc"}
+LXCPATH=${LXCPATH:-/var/lib/lxc}
 
 DIALOG=dialog
 
@@ -35,7 +41,7 @@ $DIALOG --backtitle "LXC Slackware" --radiolist "Choose a version:" 20 45 5 \
 RELEASE=$(cat $tempfile)
 
 macaddress=$(date|md5sum|sed 's/^\(..\)\(..\)\(..\)\(..\)\(..\).*$/02:\1:\2:\3:\4:\5/')
-cat <<EOF > /tmp/lxc-slackit-additional.conf
+cat <<EOF > /tmp/lxc-$CTNAME-additional.conf
 # Additional container configuration: 
 lxc.network.type = veth
 lxc.network.flags = up
@@ -45,15 +51,16 @@ lxc.network.ipv4 = $IPV4
 lxc.mount.entry = /mnt/tmp  mnt/tmp  bind   0  0
 EOF
 
-$DIALOG --title "SLACKIT-LXC install" --editbox  /tmp/lxc-slackit-additional.conf 20 50  2> $tempfile
+$DIALOG --title "SLACKIT-LXC install" --editbox  /tmp/lxc-$CTNAME-additional.conf 20 50  2> $tempfile
 ADDCONF=$(cat $tempfile)
 
 echo $CTNAME - $MARCH - $RELEASE :  $MIRROR 
 
 $DIALOG --title "SLACKIT-LXC install" --msgbox "\nName: $CTNAME \nSlackware version: $RELEASE - ($MARCH) \n\nMirror source: $MIRROR\n\n$ADDCONF\n" 25 100
 
-MIRROR=$MIRROR arch=$MARCH release=$RELEASE lxc-create -P $CTPATH -n $CTNAME -t slackware -f /tmp/lxc-slackit-additional.conf 1>& lxc-slackit-install.log & sleep 1
-$DIALOG   --scrollbar --title "SLACKIT-LXC install" --tailbox "lxc-slackit-install.log" 40 160 && sleep 0.5
+
+MIRROR=$MIRROR arch=$MARCH release=$RELEASE lxc-create -P $LXCPATH -n $CTNAME -t slackware -f /tmp/lxc-$CTNAME-additional.conf 1>& lxc-$CTNAME-install.log & sleep 1
+$DIALOG   --scrollbar --title "SLACKIT-LXC install" --tailbox "lxc-$CTNAME-install.log" 40 160 && sleep 0.5
 
 echo "$ADDCONF" >> /var/lib/lxc/$CTNAME/config
 
