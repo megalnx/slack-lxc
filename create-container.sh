@@ -1,8 +1,8 @@
 #!/bin/bash
 #
+# Create Slackware containers
 #
-#
-# William PC, Seattle, US.
+# Copyright 2015-2019, William PC, Seattle, US.
 #
 
 CTNAME=${CTNAME:-slackit-123}
@@ -18,12 +18,12 @@ tempfile=`tempfile 2>/dev/null` || tempfile=/tmp/lxc-slackit-tmp$$
 trap "rm -f $tempfile" 0 1 2 5 15
 
 
-$DIALOG --max-input 32 --title "SLACKIT-LXC install" --inputbox "Container name:" 16 45 "slackit-123" 2> $tempfile
+$DIALOG --max-input 32 --title "SLACKIT-LXC install" --inputbox "Container name:" 16 45 "$CTNAME" 2> $tempfile
 CTNAME=`cat $tempfile`
 
 
 
-$DIALOG --title "SLACKIT-LXC install" --inputbox "Slackware mirror:\nhttp://www.slackware.com/pub/\nftp://ftp.slackware.com/pub/" 16 45 "$MIRROR" 2> $tempfile
+$DIALOG --title "SLACKIT-LXC install" --inputbox "Slackware mirror:\n http://www.slackware.com/pub/\n ftp://ftp.slackware.com/pub/\n file://mnt/hd/" 16 45 "$MIRROR" 2> $tempfile
 MIRROR=$(cat $tempfile)
 
 $DIALOG --backtitle "LXC Slackware" --radiolist "Choose a machine architecture:" 20 45 5 \
@@ -69,7 +69,7 @@ $DIALOG --title "SLACKIT-LXC install" --yesno " Do you want to start the contain
 retval=$?
 
 case $retval in
-	1) echo "If you wish to start your container, use the following command: lxc-start -n $CTNAME ";;
-	0) echo "Starting $CTNAME..."; lxc-start -n $CTNAME ;;
+  1) echo "If you wish to start your container, use the following command: lxc-start -n $CTNAME ";;
+  0) echo "Starting $CTNAME..."; lxc-start -n $CTNAME ;;
 esac
 
