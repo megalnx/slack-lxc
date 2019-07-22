@@ -48,7 +48,7 @@ lxc.network.flags = up
 lxc.network.link = virbr0
 lxc.network.hwaddr = $macaddress
 lxc.network.ipv4 = $IPV4
-lxc.mount.entry = /mnt/tmp  mnt/tmp  bind   0  0
+lxc.mount.entry = /mnt/tmp  mnt/tmp  none bind   0  0
 EOF
 
 $DIALOG --title "SLACKIT-LXC install" --editbox  /tmp/lxc-$CTNAME-additional.conf 20 50  2> $tempfile
