@@ -3,4 +3,4 @@ Slackware LXC scripts
 
  - build-package.sh - Helper script for building SlackBuilds packages at LXC container
  - create-container.sh - Guided dialog script for creating Slackware containers
- - create-slack-it-builds.sh - 
+ - create-slack-it-builds.sh - Create a set of Slackware containers
