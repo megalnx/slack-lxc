@@ -2,4 +2,4 @@
 Slackware LXC scripts
 
  - create-container.sh - Guided dialog script for creating Slackware containers
- 
+ - lxc-control-slackit.sh - Control (poweron and poweroff) a set of LXC containers
